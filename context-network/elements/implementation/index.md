@@ -37,6 +37,11 @@ Getting games to players
 - **Location:** [[distribution-methods/index.md]]
 - **Contains:** Self-publishing, licensing, open source
 
+### External Platform Research
+Analysis of existing game platforms
+- **Location:** [[abstractplay-architecture-discovery.md]]
+- **Contains:** AbstractPlay architecture analysis and compatibility findings
+
 ## Physical Implementation Essentials
 
 ### Component Requirements

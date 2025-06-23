@@ -1,0 +1,1218 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Abstract Strategy Games API",
+    "description": "RESTful API for abstract strategy game platforms with support for plugins, federation, and AbstractPlay compatibility",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "url": "https://github.com/abstract-strategy-games"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:3000/v1",
+      "description": "Development server"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "apiKey": []
+    }
+  ],
+  "paths": {
+    "/games": {
+      "get": {
+        "summary": "List available games",
+        "description": "Get a paginated list of all available games on the platform",
+        "operationId": "listGames",
+        "tags": ["Games"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "description": "Filter by game tag",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameList"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/games/{gameId}": {
+      "get": {
+        "summary": "Get game details",
+        "description": "Get detailed information about a specific game",
+        "operationId": "getGame",
+        "tags": ["Games"],
+        "parameters": [
+          {
+            "name": "gameId",
+            "in": "path",
+            "required": true,
+            "description": "Unique game identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/game-instances": {
+      "post": {
+        "summary": "Create new game instance",
+        "description": "Create a new game instance with specified players and settings",
+        "operationId": "createGameInstance",
+        "tags": ["Game Instances"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Game created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameInstance"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/game-instances/{instanceId}": {
+      "get": {
+        "summary": "Get game state",
+        "description": "Get the current state of a game instance",
+        "operationId": "getGameInstance",
+        "tags": ["Game Instances"],
+        "parameters": [
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "description": "Game instance UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameState"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/game-instances/{instanceId}/moves": {
+      "post": {
+        "summary": "Make a move",
+        "description": "Submit a move in the game",
+        "operationId": "makeMove",
+        "tags": ["Game Instances"],
+        "parameters": [
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "description": "Game instance UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MoveRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Move accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoveResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/InvalidMoveError"
+          },
+          "403": {
+            "$ref": "#/components/responses/NotYourTurnError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/game-instances/{instanceId}/legal-moves": {
+      "get": {
+        "summary": "Get legal moves",
+        "description": "Get all legal moves in the current position",
+        "operationId": "getLegalMoves",
+        "tags": ["Game Instances"],
+        "parameters": [
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "description": "Game instance UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegalMoves"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/game-instances/{instanceId}/render": {
+      "get": {
+        "summary": "Render game state",
+        "description": "Get a visual rendering of the current game state",
+        "operationId": "renderGame",
+        "tags": ["Game Instances"],
+        "parameters": [
+          {
+            "name": "instanceId",
+            "in": "path",
+            "required": true,
+            "description": "Game instance UUID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "format",
+            "in": "query",
+            "description": "Rendering format",
+            "schema": {
+              "type": "string",
+              "enum": ["svg", "png", "ascii"],
+              "default": "svg"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Rendering size in pixels",
+            "schema": {
+              "type": "integer",
+              "default": 800,
+              "minimum": 100,
+              "maximum": 2000
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RenderResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/players/{playerId}": {
+      "get": {
+        "summary": "Get player profile",
+        "description": "Get information about a player",
+        "operationId": "getPlayer",
+        "tags": ["Players"],
+        "parameters": [
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "description": "Player identifier",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerProfile"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/players/{playerId}/games": {
+      "get": {
+        "summary": "Get player's games",
+        "description": "Get a list of games for a specific player",
+        "operationId": "getPlayerGames",
+        "tags": ["Players"],
+        "parameters": [
+          {
+            "name": "playerId",
+            "in": "path",
+            "required": true,
+            "description": "Player identifier",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by game status",
+            "schema": {
+              "type": "string",
+              "enum": ["active", "completed", "all"],
+              "default": "all"
+            }
+          },
+          {
+            "name": "gameId",
+            "in": "query",
+            "description": "Filter by game type",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "default": 1,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlayerGamesList"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/federation/servers": {
+      "get": {
+        "summary": "List federated servers",
+        "description": "Get a list of federated game servers",
+        "operationId": "listFederatedServers",
+        "tags": ["Federation"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FederatedServerList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/federation/games": {
+      "post": {
+        "summary": "Create federated game",
+        "description": "Initiate a game across federated servers",
+        "operationId": "createFederatedGame",
+        "tags": ["Federation"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFederatedGameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Federated game created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameInstance"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/webhooks": {
+      "post": {
+        "summary": "Register webhook",
+        "description": "Register a webhook for game events",
+        "operationId": "registerWebhook",
+        "tags": ["Webhooks"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookRegistration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Webhook registered",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebhookResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          }
+        }
+      }
+    },
+    "/legacy/authQuery": {
+      "post": {
+        "summary": "AbstractPlay authenticated query",
+        "description": "Backward compatibility endpoint for AbstractPlay authenticated queries",
+        "operationId": "legacyAuthQuery",
+        "tags": ["Legacy"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string"
+                  },
+                  "pars": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/legacy/query": {
+      "get": {
+        "summary": "AbstractPlay public query",
+        "description": "Backward compatibility endpoint for AbstractPlay public queries",
+        "operationId": "legacyQuery",
+        "tags": ["Legacy"],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "schemas": {
+      "GameList": {
+        "type": "object",
+        "properties": {
+          "games": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GameSummary"
+            }
+          },
+          "total": {
+            "type": "integer",
+            "description": "Total number of games"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Current page number"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Number of items per page"
+          }
+        },
+        "required": ["games", "total", "page", "pageSize"]
+      },
+      "GameSummary": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique game identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name"
+          },
+          "version": {
+            "type": "string",
+            "description": "Game version"
+          },
+          "minPlayers": {
+            "type": "integer",
+            "minimum": 2
+          },
+          "maxPlayers": {
+            "type": "integer",
+            "minimum": 2
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "pluginUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to plugin if external"
+          }
+        },
+        "required": ["id", "name", "version", "minPlayers", "maxPlayers"]
+      },
+      "GameDetails": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GameSummary"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string"
+              },
+              "rules": {
+                "type": "string",
+                "format": "uri"
+              },
+              "protocol": {
+                "type": "string",
+                "description": "Protocol version"
+              },
+              "capabilities": {
+                "$ref": "#/components/schemas/GameCapabilities"
+              }
+            }
+          }
+        ]
+      },
+      "GameCapabilities": {
+        "type": "object",
+        "properties": {
+          "ai": {
+            "type": "boolean"
+          },
+          "variants": {
+            "type": "boolean"
+          },
+          "analysis": {
+            "type": "boolean"
+          },
+          "timeControl": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateGameRequest": {
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string"
+          },
+          "variant": {
+            "type": "string"
+          },
+          "players": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PlayerInfo"
+            },
+            "minItems": 2
+          },
+          "timeControl": {
+            "$ref": "#/components/schemas/TimeControl"
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "required": ["gameId", "players"]
+      },
+      "PlayerInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "name"]
+      },
+      "TimeControl": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["none", "absolute", "increment", "byoyomi"]
+          },
+          "initial": {
+            "type": "integer",
+            "description": "Initial time in seconds"
+          },
+          "increment": {
+            "type": "integer",
+            "description": "Increment per move in seconds"
+          }
+        },
+        "required": ["type"]
+      },
+      "GameInstance": {
+        "type": "object",
+        "properties": {
+          "instanceId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "gameId": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": ["active", "completed", "abandoned"]
+          },
+          "currentPlayer": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "joinUrl": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": ["instanceId", "gameId", "state", "currentPlayer", "createdAt"]
+      },
+      "GameState": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GameInstance"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "moveCount": {
+                "type": "integer"
+              },
+              "lastMove": {
+                "type": "string"
+              },
+              "gameState": {
+                "type": "object",
+                "description": "Game-specific state data"
+              },
+              "history": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MoveHistory"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "MoveHistory": {
+        "type": "object",
+        "properties": {
+          "player": {
+            "type": "integer"
+          },
+          "move": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["player", "move", "timestamp"]
+      },
+      "MoveRequest": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string"
+          },
+          "notation": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["playerId", "notation"]
+      },
+      "MoveResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "gameState": {
+            "type": "object"
+          },
+          "gameOver": {
+            "type": "boolean"
+          },
+          "winners": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "legalMoves": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["success", "gameState", "gameOver"]
+      },
+      "LegalMoves": {
+        "type": "object",
+        "properties": {
+          "moves": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MoveDetail"
+            }
+          },
+          "count": {
+            "type": "integer"
+          }
+        },
+        "required": ["moves", "count"]
+      },
+      "MoveDetail": {
+        "type": "object",
+        "properties": {
+          "notation": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "piece": {
+            "type": "string"
+          }
+        },
+        "required": ["notation"]
+      },
+      "RenderResponse": {
+        "type": "object",
+        "properties": {
+          "format": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string",
+            "description": "Rendered output (SVG, base64 PNG, or ASCII)"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "width": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "lastMove": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string"
+                  },
+                  "to": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "required": ["format", "data"]
+      },
+      "PlayerProfile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "rating": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer"
+            }
+          },
+          "stats": {
+            "$ref": "#/components/schemas/PlayerStats"
+          }
+        },
+        "required": ["id", "name"]
+      },
+      "PlayerStats": {
+        "type": "object",
+        "properties": {
+          "gamesPlayed": {
+            "type": "integer"
+          },
+          "winRate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      },
+      "PlayerGamesList": {
+        "type": "object",
+        "properties": {
+          "games": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GameInstance"
+            }
+          },
+          "total": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          }
+        },
+        "required": ["games", "total", "page"]
+      },
+      "FederatedServerList": {
+        "type": "object",
+        "properties": {
+          "servers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FederatedServer"
+            }
+          }
+        },
+        "required": ["servers"]
+      },
+      "FederatedServer": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["online", "offline", "maintenance"]
+          },
+          "games": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["id", "name", "url", "status"]
+      },
+      "CreateFederatedGameRequest": {
+        "type": "object",
+        "properties": {
+          "gameId": {
+            "type": "string"
+          },
+          "localPlayer": {
+            "type": "string"
+          },
+          "remotePlayer": {
+            "type": "string",
+            "description": "Format: player@server"
+          },
+          "remoteServer": {
+            "type": "string"
+          }
+        },
+        "required": ["gameId", "localPlayer", "remotePlayer", "remoteServer"]
+      },
+      "WebhookRegistration": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["move.made", "game.over", "player.joined", "player.left", "game.abandoned"]
+            }
+          },
+          "secret": {
+            "type": "string",
+            "description": "Secret for webhook signature validation"
+          }
+        },
+        "required": ["url", "events"]
+      },
+      "WebhookResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["id", "url", "events", "createdAt"]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "details": {
+                "type": "object"
+              }
+            },
+            "required": ["code", "message"]
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "requestId": {
+            "type": "string"
+          }
+        },
+        "required": ["error", "timestamp"]
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Authentication required",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "BadRequestError": {
+        "description": "Invalid request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "InvalidMoveError": {
+        "description": "Invalid move",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "INVALID_MOVE",
+                "message": "The move e2-e5 is not legal in the current position",
+                "details": {
+                  "position": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR",
+                  "attemptedMove": "e2-e5",
+                  "legalMoves": ["e2-e3", "e2-e4"]
+                }
+              },
+              "timestamp": "2024-01-01T00:00:00Z",
+              "requestId": "req_123456"
+            }
+          }
+        }
+      },
+      "NotYourTurnError": {
+        "description": "Not player's turn",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Games",
+      "description": "Game catalog operations"
+    },
+    {
+      "name": "Game Instances",
+      "description": "Active game management"
+    },
+    {
+      "name": "Players",
+      "description": "Player profiles and statistics"
+    },
+    {
+      "name": "Federation",
+      "description": "Cross-server game operations"
+    },
+    {
+      "name": "Webhooks",
+      "description": "Event subscriptions"
+    },
+    {
+      "name": "Legacy",
+      "description": "AbstractPlay compatibility"
+    }
+  ]
+}

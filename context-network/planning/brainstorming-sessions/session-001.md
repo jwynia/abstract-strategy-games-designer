@@ -12,6 +12,7 @@
 - **Core Mechanic**: Pieces exist in superposition states until observed
 - **Unique Aspect**: Territory control is probabilistic until "measured"
 - **Complexity**: Medium
+- **Implementation**: Digital-Required (probability calculations, hidden states)
 - **Components**: Board with quantum zones, probability dice, observation tokens
 - **Status**: Raw Idea
 
@@ -19,6 +20,7 @@
 - **Core Mechanic**: Controlled territories slowly erode unless reinforced
 - **Unique Aspect**: Dynamic board state that changes even without player action
 - **Complexity**: Light-Medium
+- **Implementation**: Physical-Friendly (simple counters, clear visual state)
 - **Components**: Modular board tiles, erosion markers, reinforcement stones
 - **Status**: Raw Idea
 
@@ -28,6 +30,7 @@
 - **Core Mechanic**: Build bridges between islands, but each bridge weakens with use
 - **Unique Aspect**: Connections degrade over time based on traffic
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (track strength with markers)
 - **Components**: Island tiles, bridge pieces with strength markers, cargo tokens
 - **Status**: Raw Idea
 
@@ -35,6 +38,7 @@
 - **Core Mechanic**: Create neural pathways that strengthen with repeated use
 - **Unique Aspect**: Frequently used paths become permanent
 - **Complexity**: Medium-Heavy
+- **Implementation**: Hybrid-Optimal (physical board, digital tracking helps)
 - **Components**: Hex grid, pathway tokens, signal markers
 - **Status**: Raw Idea
 
@@ -44,6 +48,7 @@
 - **Core Mechanic**: Captured pieces return to play after X turns
 - **Unique Aspect**: Temporary captures create timing puzzles
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (turn track for returns)
 - **Components**: Standard chess-like board, timer tokens, piece return track
 - **Status**: Raw Idea
 
@@ -51,6 +56,7 @@
 - **Core Mechanic**: Captured pieces convert adjacent enemy pieces
 - **Unique Aspect**: Chain reactions possible with careful positioning
 - **Complexity**: Light-Medium
+- **Implementation**: Physical-Friendly (flip pieces like Othello)
 - **Components**: Two-sided pieces, standard grid board
 - **Status**: Raw Idea
 
@@ -60,6 +66,7 @@
 - **Core Mechanic**: Form specific star patterns to score points
 - **Unique Aspect**: Patterns must be maintained for multiple turns
 - **Complexity**: Light
+- **Implementation**: Physical-Friendly (visual pattern matching)
 - **Components**: Star tokens, pattern cards, night sky board
 - **Status**: Raw Idea
 
@@ -67,6 +74,7 @@
 - **Core Mechanic**: Grow crystal formations following specific symmetry rules
 - **Unique Aspect**: Crystals can merge or shatter based on formation
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (3D pieces enhance experience)
 - **Components**: Hex tiles, crystal pieces, symmetry cards
 - **Status**: Raw Idea
 
@@ -76,6 +84,7 @@
 - **Core Mechanic**: Pieces gain momentum and must continue in direction
 - **Unique Aspect**: Planning required to avoid overshooting targets
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (momentum tracks work well)
 - **Components**: Track board, momentum markers, obstacle pieces
 - **Status**: Raw Idea
 
@@ -83,6 +92,7 @@
 - **Core Mechanic**: Pieces can teleport but leave traces
 - **Unique Aspect**: Previous positions affect future movement options
 - **Complexity**: Medium-Heavy
+- **Implementation**: Hybrid-Optimal (trace tracking benefits from digital)
 - **Components**: Board with portal spaces, trace markers, piece tokens
 - **Status**: Raw Idea
 
@@ -99,6 +109,7 @@
 - **Core Mechanic**: Players trade energy between pieces, depleting some to empower others
 - **Unique Aspect**: Zero-sum energy system creates sacrifice decisions
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (tokens track energy well)
 - **Components**: Energy tokens, piece bases with counters, transfer markers
 - **Status**: Raw Idea
 
@@ -106,6 +117,7 @@
 - **Core Mechanic**: Resources appear on schedule, must be collected before decay
 - **Unique Aspect**: Timing and area control combine with resource management
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (turn-based resource placement)
 - **Components**: Seasonal board sections, resource cubes, decay track
 - **Status**: Raw Idea
 
@@ -115,6 +127,7 @@
 - **Core Mechanic**: Pieces exist in different phases (solid/liquid/gas) with unique movement
 - **Unique Aspect**: Environmental triggers cause phase changes
 - **Complexity**: Medium-Heavy
+- **Implementation**: Physical-Friendly (rotating pieces show phase)
 - **Components**: Triple-sided pieces, temperature zones, phase change cards
 - **Status**: Raw Idea
 
@@ -122,6 +135,7 @@
 - **Core Mechanic**: Pieces evolve based on board conditions and interactions
 - **Unique Aspect**: No two games have same evolution paths
 - **Complexity**: Heavy
+- **Implementation**: Digital-Required (complex branching paths, state tracking)
 - **Components**: Modular piece upgrades, environment tiles, mutation dice
 - **Status**: Raw Idea
 
@@ -131,6 +145,7 @@
 - **Core Mechanic**: Players see different information based on piece positions
 - **Unique Aspect**: Line-of-sight mechanics in abstract strategy
 - **Complexity**: Medium-Heavy
+- **Implementation**: Digital-Required (line-of-sight calculations, hidden info)
 - **Components**: Standing screens, vision tokens, hidden movement boards
 - **Status**: Raw Idea
 
@@ -138,6 +153,7 @@
 - **Core Mechanic**: Board state hidden, revealed temporarily by movement
 - **Unique Aspect**: Memory becomes a key strategic element
 - **Complexity**: Medium
+- **Implementation**: Hybrid-Optimal (physical tiles work, digital excels)
 - **Components**: Flip tiles, memory tokens, exploration pieces
 - **Status**: Raw Idea
 
@@ -147,6 +163,7 @@
 - **Core Mechanic**: Temporary alliances form and break based on board state
 - **Unique Aspect**: Automatic alliance triggers prevent kingmaking
 - **Complexity**: Medium-Heavy
+- **Implementation**: Physical-Friendly (alliance markers clear)
 - **Components**: Alliance markers, shared goal cards, betrayal tokens
 - **Status**: Raw Idea
 
@@ -154,6 +171,7 @@
 - **Core Mechanic**: Pieces need proximity to enemy pieces to survive
 - **Unique Aspect**: Can't eliminate opponents completely without losing
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (proximity easy to verify)
 - **Components**: Life tokens, proximity markers, symbiosis track
 - **Status**: Raw Idea
 
@@ -163,6 +181,7 @@
 - **Core Mechanic**: Actions can be delayed to execute in future turns
 - **Unique Aspect**: Stack multiple delayed actions for combo effects
 - **Complexity**: Heavy
+- **Implementation**: Hybrid-Optimal (timeline tracking complex)
 - **Components**: Timeline board, action cards, delay markers
 - **Status**: Raw Idea
 
@@ -170,6 +189,7 @@
 - **Core Mechanic**: Limited ability to undo moves, including opponent's
 - **Unique Aspect**: Rewind tokens as strategic resource
 - **Complexity**: Medium
+- **Implementation**: Digital-Required (move history tracking)
 - **Components**: Standard board, rewind tokens, move history tracker
 - **Status**: Raw Idea
 
@@ -222,6 +242,7 @@
 - **Core Mechanic**: Pieces move between stacked transparent boards
 - **Unique Aspect**: Vertical movement creates 3D strategy
 - **Complexity**: Medium-Heavy
+- **Implementation**: Physical-Friendly (acrylic layers work great)
 - **Components**: Stackable clear boards, elevation markers, 3D pieces
 - **Status**: Raw Idea
 
@@ -229,6 +250,7 @@
 - **Core Mechanic**: Board can be folded to create adjacencies
 - **Unique Aspect**: Dynamic topology changes distance relationships
 - **Complexity**: Heavy
+- **Implementation**: Digital-Required (topology tracking, adjacency calc)
 - **Components**: Flexible board with hinges, fold markers, magnetic pieces
 - **Status**: Raw Idea
 
@@ -238,6 +260,7 @@
 - **Core Mechanic**: Pieces attract/repel based on polarity
 - **Unique Aspect**: Involuntary movement after each turn
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (real magnets enhance play)
 - **Components**: Magnetic pieces, polarity indicators, metal board
 - **Status**: Raw Idea
 
@@ -245,6 +268,7 @@
 - **Core Mechanic**: Massive pieces create gravity that pulls others
 - **Unique Aspect**: Piece weight affects board dynamics
 - **Complexity**: Medium-Heavy
+- **Implementation**: Digital-Required (gravity calculations, multi-body physics)
 - **Components**: Weighted pieces, pull range indicators, orbital paths
 - **Status**: Raw Idea
 
@@ -254,6 +278,7 @@
 - **Core Mechanic**: Environmental conditions affect movement and capture
 - **Unique Aspect**: Rotating weather system changes strategy
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (weather wheel works well)
 - **Components**: Weather wheel, condition cards, terrain tiles
 - **Status**: Raw Idea
 
@@ -261,6 +286,7 @@
 - **Core Mechanic**: Board floods/drains on schedule affecting accessibility
 - **Unique Aspect**: Time pressure to position before tide changes
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (flip tiles for water/land)
 - **Components**: Reversible board tiles, tide tracker, amphibious pieces
 - **Status**: Raw Idea
 
@@ -272,6 +298,7 @@
 - **Core Mechanic**: Players can create new movement rules
 - **Unique Aspect**: Game rules evolve during play
 - **Complexity**: Heavy
+- **Implementation**: Hybrid-Optimal (rule tracking benefits from digital)
 - **Components**: Rule cards, veto tokens, base pieces
 - **Status**: Raw Idea
 
@@ -279,6 +306,7 @@
 - **Core Mechanic**: Each piece breaks one rule of the game
 - **Unique Aspect**: Asymmetric abilities emerge from rule breaking
 - **Complexity**: Medium-Heavy
+- **Implementation**: Physical-Friendly (exception cards work)
 - **Components**: Exception cards, standard pieces, rule reminder board
 - **Status**: Raw Idea
 
@@ -288,6 +316,7 @@
 - **Core Mechanic**: Piece movements cost resources that fluctuate
 - **Unique Aspect**: Economic pressure affects tactical decisions
 - **Complexity**: Medium-Heavy
+- **Implementation**: Physical-Friendly (market board tracks prices)
 - **Components**: Price tracker, currency tokens, movement pieces
 - **Status**: Raw Idea
 
@@ -295,6 +324,7 @@
 - **Core Mechanic**: Pieces gain power through turn investment
 - **Unique Aspect**: Choosing between immediate action and future strength
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (power tokens stack on pieces)
 - **Components**: Power counters, investment tracks, piece upgrades
 - **Status**: Raw Idea
 
@@ -304,6 +334,7 @@
 - **Core Mechanic**: All pieces must move in same pattern
 - **Unique Aspect**: Single input controls multiple pieces
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (pattern cards guide movement)
 - **Components**: Pattern cards, synchronized piece sets, obstacle tiles
 - **Status**: Raw Idea
 
@@ -311,6 +342,7 @@
 - **Core Mechanic**: Opponent's moves are mirrored on your pieces
 - **Unique Aspect**: Defensive positioning becomes crucial
 - **Complexity**: Light-Medium
+- **Implementation**: Physical-Friendly (symmetric board enables)
 - **Components**: Mirrored board, standard pieces, block tokens
 - **Status**: Raw Idea
 
@@ -322,6 +354,7 @@
 - **Core Mechanic**: Win by having all pieces captured
 - **Unique Aspect**: Inverse victory condition creates unusual tactics
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (simple win condition)
 - **Components**: Standard board, sacrifice altars, martyr pieces
 - **Status**: Raw Idea
 
@@ -329,6 +362,7 @@
 - **Core Mechanic**: Win by achieving exact symmetry on board
 - **Unique Aspect**: Both creation and destruction serve victory
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (visual symmetry check)
 - **Components**: Symmetry cards, standard pieces, balance checker
 - **Status**: Raw Idea
 
@@ -338,6 +372,7 @@
 - **Core Mechanic**: Complete sequential objectives for victory
 - **Unique Aspect**: Each completed quest changes board state
 - **Complexity**: Medium-Heavy
+- **Implementation**: Physical-Friendly (quest cards track progress)
 - **Components**: Quest cards, achievement markers, variable board
 - **Status**: Raw Idea
 
@@ -345,6 +380,7 @@
 - **Core Mechanic**: Pieces must climb through victory tiers
 - **Unique Aspect**: Multiple mini-victories build to final win
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (tier boards show progress)
 - **Components**: Tier boards, ascension tokens, checkpoint markers
 - **Status**: Raw Idea
 
@@ -354,6 +390,7 @@
 - **Core Mechanic**: Multiple players can win if conditions met
 - **Unique Aspect**: Cooperation and competition coexist
 - **Complexity**: Medium
+- **Implementation**: Physical-Friendly (victory cards clear)
 - **Components**: Victory condition cards, alliance tokens, shared goals
 - **Status**: Raw Idea
 
@@ -361,6 +398,7 @@
 - **Core Mechanic**: Actions affect future games in campaign
 - **Unique Aspect**: Long-term strategy across multiple sessions
 - **Complexity**: Heavy
+- **Implementation**: Physical-Friendly (legacy games proven)
 - **Components**: Legacy envelopes, permanent markers, evolving board
 - **Status**: Raw Idea
 
@@ -370,6 +408,7 @@
 - **Core Mechanic**: Spatial puzzles must be solved to capture
 - **Unique Aspect**: Deduction meets strategy
 - **Complexity**: Medium-Heavy
+- **Implementation**: Physical-Friendly (puzzle cards work)
 - **Components**: Puzzle cards, lock pieces, solution keys
 - **Status**: Raw Idea
 
@@ -377,6 +416,7 @@
 - **Core Mechanic**: Predict opponent's patterns to gain advantages
 - **Unique Aspect**: Meta-gaming and pattern recognition combine
 - **Complexity**: Medium
+- **Implementation**: Hybrid-Optimal (pattern tracking aids help)
 - **Components**: Prediction cards, pattern history tracker, bonus tokens
 - **Status**: Raw Idea
 

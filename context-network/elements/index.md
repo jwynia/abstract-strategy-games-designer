@@ -52,6 +52,11 @@ Repository of original game designs
 - **Location:** [[game-concepts/index.md]]
 - **Contains:** Game specifications, rules, implementation notes
 
+### 9. Protocols
+Formal specifications for interoperability and extensibility
+- **Location:** [[protocols/index.md]]
+- **Contains:** Game interface protocols, API specifications, compatibility guides
+
 ## Navigation Paths
 
 ### For New Designers
@@ -70,6 +75,12 @@ Repository of original game designs
 1. Review [[notation-systems/index.md]] for recording games
 2. Check [[game-concepts/index.md]] for documentation patterns
 3. Use [[resources-tools/index.md]] for software support
+
+### For Platform Development
+1. Study [[protocols/index.md]] for interface specifications
+2. Review [[implementation/index.md]] for platform considerations
+3. Check [[protocols/abstractplay-compatibility-guide.md]] for migration paths
+4. Follow [[protocols/extension-strategy.md]] for extensibility
 
 ## Relationships
 - **Parent Nodes:** [[../discovery.md]]
