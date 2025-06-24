@@ -1,0 +1,31 @@
+{
+  "name": "abstract-strategy-games-server",
+  "version": "1.0.0",
+  "description": "Hono-based server for abstract strategy games platform",
+  "scripts": {
+    "dev": "tsx watch --env-file=.env src/server.ts",
+    "build": "tsc",
+    "start": "node --env-file=.env dist/server.js",
+    "generate-types": "openapi-typescript ../api/openapi.json -o src/types/generated-api.ts",
+    "validate-spec": "openapi-generator-cli validate -i ../api/openapi.json",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.8.0",
+    "@hono/swagger-ui": "^0.2.1",
+    "@hono/zod-openapi": "^0.10.0",
+    "hono": "^4.0.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "openapi-typescript": "^6.7.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
