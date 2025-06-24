@@ -10,7 +10,9 @@ This document indexes all updates related to the technical infrastructure and sy
 - **Confidence:** Established
 
 ## Items in this Category
-*No infrastructure updates yet.*
+
+### 2025-06-24
+- [[2025-06-24-service-layer-refactoring.md]] - Major server refactoring implementing dependency injection and service layer architecture
 
 ## Related Categories
 - [Structure Updates](../structure/index.md)
@@ -21,8 +23,9 @@ This document indexes all updates related to the technical infrastructure and sy
 
 ## Metadata
 - **Created:** 2025-05-21
-- **Last Updated:** 2025-05-21
-- **Updated By:** Cline
+- **Last Updated:** 2025-06-24
+- **Updated By:** Assistant
 
 ## Change History
 - 2025-05-21: Initial creation of infrastructure updates index
+- 2025-06-24: Added service layer refactoring documentation

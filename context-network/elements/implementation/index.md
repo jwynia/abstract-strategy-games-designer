@@ -42,6 +42,11 @@ Analysis of existing game platforms
 - **Location:** [[abstractplay-architecture-discovery.md]]
 - **Contains:** AbstractPlay architecture analysis and compatibility findings
 
+### Server Architecture
+Service layer implementation for game API
+- **Location:** [[service-layer-architecture.md]]
+- **Contains:** Dependency injection, service patterns, API structure
+
 ## Physical Implementation Essentials
 
 ### Component Requirements

@@ -3,50 +3,71 @@
 ## Task: Identify Routes Needing Service Interfaces
 
 ### Start Time: 2025-06-24
+### Update: 2025-06-24 - Major Progress
 
 ## Current Status
 
-### Routes Analyzed
-1. **games.ts** - Uses inline mock data
-2. **game-instances.ts** - Uses in-memory Map storage
-3. **tournaments.ts** - Uses in-memory Map storage  
-4. **explorations.ts** - Uses in-memory Map storage
-5. **push-notifications.ts** - Uses in-memory Map storage
-6. **events.ts** - Uses in-memory Map storage
-7. **bot.ts** - Uses inline mock functions
+### ✅ COMPLETED IMPLEMENTATIONS
+1. **ServiceContainer** - Dependency injection system implemented
+2. **Service middleware** - Auto-injection into Hono context
+3. **Mock services implemented:**
+   - MockUserService
+   - MockChallengeService
+   - MockFederationService
+   - MockGameService
+   - MockTournamentService
+   - MockExplorationService
+4. **Routes refactored to use services:**
+   - games.ts
+   - game-instances.ts
+   - challenges.ts
+   - federation.ts
+   - players.ts
+   - tournaments.ts
+   - explorations.ts
 
-### Existing Service Interfaces
-- IUserService ✓ (with MockUserService)
-- IChallengeService ✓ (with MockChallengeService)
-- IFederationService ✓ (with MockFederationService)
-- IGameService ✓ (interface exists, no mock implementation)
-- ITournamentService ✓ (interface exists, no mock implementation)
+### Original Route Analysis (Before Refactoring)
+1. **games.ts** - ✅ REFACTORED (now uses IGameService)
+2. **game-instances.ts** - ✅ REFACTORED (now uses IGameService)
+3. **tournaments.ts** - ✅ REFACTORED (now uses ITournamentService)
+4. **explorations.ts** - ✅ REFACTORED (now uses IExplorationService)
+5. **push-notifications.ts** - ❌ Still uses in-memory Map storage
+6. **events.ts** - ❌ Still uses in-memory Map storage
+7. **bot.ts** - ❌ Still uses inline mock functions
 
-## Services Needed
+### Service Interface Status
+- IUserService ✅ (interface + MockUserService)
+- IChallengeService ✅ (interface + MockChallengeService)
+- IFederationService ✅ (interface + MockFederationService)
+- IGameService ✅ (interface + MockGameService)
+- ITournamentService ✅ (interface + MockTournamentService)
+- IExplorationService ✅ (interface + MockExplorationService)
 
-### 1. MockGameService
-**Status**: Interface exists, implementation missing
-**Route**: games.ts, game-instances.ts
-**Responsibilities**:
+## Remaining Services Needed
+
+### 1. ✅ MockGameService - COMPLETED
+**Status**: Implemented
+**Routes**: games.ts, game-instances.ts
+**Implementation includes**:
 - Game catalog management
 - Game instance lifecycle
 - Move validation and execution
 - Game state management
-- Rendering
+- SVG rendering
 
-### 2. MockTournamentService  
-**Status**: Interface exists, implementation missing
+### 2. ✅ MockTournamentService - COMPLETED
+**Status**: Implemented
 **Route**: tournaments.ts
-**Responsibilities**:
+**Implementation includes**:
 - Tournament creation and management
 - Player registration
-- Game scheduling
+- Match scheduling
 - Standings calculation
 
-### 3. IExplorationService + MockExplorationService
-**Status**: Not created
+### 3. ✅ IExplorationService + MockExplorationService - COMPLETED
+**Status**: Implemented
 **Route**: explorations.ts
-**Responsibilities**:
+**Implementation includes**:
 - Save/load explorations
 - Playground state management
 - Game notes management
